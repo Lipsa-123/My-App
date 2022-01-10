@@ -1,71 +1,30 @@
-// const User = (props) =>{
-//    return(
-//        <div>
-//            <h1>{props.name}</h1>
-//            <h4>{props.description}</h4>
-//        </div>
-//    );
-// }
+import React, {useState, useEffect} from "react";
 
-// export default User;
-
-import React from "react";
-
-class User extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state={
-            planet:"earth",
-        }
-        console.log("Hey I am from constructor");
-    }
-
-    componentDidMount(){
-        console.log("Hey i am from ComponentDidMount");
-        this.setState({planet:"Mars"});
-    }
-
-    // static getDerivedStateFromProps(props, state){
-    //     console.log("I am from get derived state from props.");
-    //     return {planet:"Mars"};
-    // }
-
-    shouldComponentUpdate(nextProp, nextState){
-        console.log("I am from should component update.");
-        console.log({
-            nextProp,nextState,
-        });
-        return true;
-    }
-
-    getSnapshotBeforeUpdate(prevProp, prevState){
-        console.log("I am from get snapshot before update.");
-        console.log({
-            prevProp,prevState
-        });
-        return true;
-    }
-
-    componentDidUpdate(){
-        console.log("Hey i am from componet did update.")
-        console.log(this.state);
-    }
-    render() {
-        console.log("Hey i am from render()");
-        return (
-            <div>
-                <h1>
-                    {this.props.name}
-                </h1>
-                <p>
-                    {this.props.description}
-                </p>
-                <h4>{this.state.planet}</h4>
-            </div>
-        );
-    }
+const User = (props) =>{
+    const [planet, setPlanet]=useState("earth");
+    // console.log(planet);
+    //useState returns first the value, then second the function to update the value. So we can put it that in an arra
+    // setPlanet("Mars"); // -> It will give error of infinity loop
+    //componentDidMount
+    useEffect(()=>{
+        //heavy computation
+        console.log("Component mounting");
+        
+        //componentWillUnmount
+        return console.log("bye bye");
+    },[]);
+    //component DId update
+    //shouldcomponentUpdate
+    useEffect(()=>{
+        console.log("Planet changes");
+    },[planet]);
+   return(
+       <div>
+           <h1>{props.name}</h1>
+           <h4>{props.description}</h4>
+           <button onClick={()=> setPlanet("pluto")}>{planet}</button>
+       </div>
+   );
 }
 
 export default User;
